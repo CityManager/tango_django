@@ -1,0 +1,23 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block body_block %}
+{% if user.is_authenticated %}
+<h1>{{ user.username }}</h1>
+    <div class="col-xs-12 col-sm-6 placeholder">
+        <span>{{ user.username }}</span><br/>
+        <span>{{ user.email }}</span><br/>
+        {% if user_profile %}
+        <span>{{ user_profile.picture }}</span><br/>
+        <span>{{ user_profile.website }}</span><br/>
+        <img src="/media/{{ user_profile.picture }}" alt="profile-image" class=""/>
+        <!-- <img src="..." alt="..." class="img-circle"/> -->
+        <!-- <img src="/media/{{ user_profile.picture }}" alt="profile-image" class="img-thumbnail"/><br/> -->
+        <!-- <img data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="/media/{{ user_profile.picture }}" data-holder-rendered="true" style="width: 140px; height: 140px;"/> -->
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

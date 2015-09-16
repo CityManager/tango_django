@@ -1,0 +1,16 @@
+{% extends 'rango/base.html' %}
+{% load bootstrap_toolkit %}
+
+{% block title %}
+Registration
+{% endblock %}
+
+{% block body_block %}
+<h1>Rango - Registration</h1>
+<form method="post" action=".">
+    {% csrf_token %}
+    {{ form|as_bootstrap }}
+    <br/>
+    <input class="btn btn-primary" type="submit" name="submit" value="Register"/>
+</form>
+{% endblock %}

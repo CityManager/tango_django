@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_extras %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <title>Rango - {% block title %}How to Tango with Django{% endblock %}</title>
+
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{% static 'js/html5shiv.min.js' %}"></script>
+      <script src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/rango/">Rango</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                {% if user.is_authenticated %}
+                <!--<li><a href="{% url 'restricted' %}">Restricted Page</a></li>-->
+                <!--<li><a href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>-->
+                <!-- 上面是使用 django-registration-redux package -->
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <!--<li><a href="{% url 'registration_register' %}">Register</a></li>-->
+                <!--<li><a href="{% url 'auth_login' %}">Login</a></li>-->
+                <!-- 上面是使用 django-registration-redux package -->
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'about' %}">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+
+                {% block side_block %}
+                {% get_category_list %}
+                {% endblock %}
+                <ul class="nav nav-sidebar">
+                    <li>
+                    <div class="col-sm-10 col-md-12">
+                        <div class="thumbnail">
+                            <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+                        </div>
+                    </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div class="span3">
+                            <div class="well sidebar-nav">
+                                <ul class="nav nav-list">
+                                    <form>
+                                    <label>Find a Category</label>
+                                    <li><input  class="search-query span10" type="text"
+                                        name="suggestion" value="" id="suggestion" /></li>
+                                    </form>
+                                </ul>
+                                <div id="cats">
+                                {% if cats %}
+                                    {% include 'rango/cats.html' with cats=cats %}
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                   {% block body_block %} You should extends the base.html, and fill the 'body_block'.{% endblock %}
+                </div>
+                <hr/>
+                <footer>
+                    <div class="container-fluid">
+                        <p>&copy; Rango: How to Tango with Django 2015</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <hr/>
+
+
+    <!-- Bootstrap core JavaScript  ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'js/jquery-1.11.3.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/rango_jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/rango_ajax.js' %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
+</body>
+</html>

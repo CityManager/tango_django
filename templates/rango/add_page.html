@@ -1,0 +1,24 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}   <!-- 每个具体的模板如果需要引用静态文件，一定要单独加载，无法从继承中获得 -->
+{% load bootstrap_toolkit %}
+
+{% block title %}
+Add  Page
+{% endblock %}
+
+{% block body_block %}
+    {% if category %}
+        <div class="page-header">
+            <h1>Add a Page to <a href="{% url 'category' category.slug %}">{{ category.name }}</a></h1>  
+            <!-- 怎么读取对象内部的属性啊 -->
+        </div>
+        <form role="form" id="page_form" method="post" action=".">
+            {% csrf_token %}
+            {{ form|as_bootstrap }}
+            <br/>
+            <button class="btn btn-primary" type="submit" name="submit" >Add the Page Link</button>
+        </form>
+    {% else %}
+        <p>You should add a category first! <br/>Please visit <a href="{% url 'add_category' %}">Add a New Category</a></p>
+    {% endif %}
+{% endblock %}

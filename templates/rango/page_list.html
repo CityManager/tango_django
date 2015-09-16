@@ -1,0 +1,6 @@
+{% for page in pages %}
+<li class="list-group-item">
+    <span class="glyphicon glyphicon-eye-open badge">{{ page.views }}</span>
+    <a href="{% url 'goto' %}?page_id={{ page.id }}" target='_blank'>{{ page.title }}</a>
+</li>
+{% endfor %}
